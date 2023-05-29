@@ -25,9 +25,9 @@ MENU = {
 }
 
 resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
+    "water": 3000,
+    "milk": 2000,
+    "coffee": 1000,
 }
 money = 0
 
@@ -44,12 +44,12 @@ def update_resources(item_bought):
 
 def process_coins():
     # TODO: 3. Process coins
+    paid_amount = 0
     print("Please insert coins.")
-    quarters = int(input("How many quarters? "))
-    dimes = int(input("How many dimes? "))
-    nickels = int(input("How many nickels? "))
-    pennies = int(input("How many pennies? "))
-    paid_amount = quarters * 0.25 + dimes * 0.1 + nickels * 0.05 + pennies * 0.01
+    paid_amount += int(input("How many quarters? ")) * 0.25
+    paid_amount += int(input("How many dimes? ")) * 0.1
+    paid_amount += int(input("How many nickels? ")) * 0.05
+    paid_amount += int(input("How many pennies? ")) * 0.01
     return paid_amount
 
 # TODO: 2. Check resources  sufficient?
@@ -76,13 +76,14 @@ machine_on = True
 while machine_on:
     user_choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
     # TODO: 1. Print report
-    if user_choice == "report":
-        for item in resources:
-            print(f"{item}: {resources[item]}")
-        print(f"${money}")
-    elif user_choice == "off":
+    if user_choice == "off":
         print("Turning off")
         machine_on = False
+    elif user_choice == "report":
+        print(f"Water: {resources['water']}ml")
+        print(f"Milk: {resources['milk']}ml")
+        print(f"Coffee: {resources['coffee']}g")
+        print(f"Money: ${money}")
     else:
         resources_available = check_resource_availability(user_choice)
         if not resources_available:
@@ -100,8 +101,6 @@ while machine_on:
                 # TODO: 5. Make coffee.
                 print(f"Here is your {user_choice} ☕. Enjoy!")
                 update_resources(user_choice)
-
-
 
 
 
